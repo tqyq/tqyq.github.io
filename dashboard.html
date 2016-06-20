@@ -36,7 +36,8 @@
 
     <br/>
 
-    <div class="grid-stack" data-gs-width=12 >
+    <div class="grid-stack" data-gs-width="60" data-gs-height="5" data-gs-min-height="5" data-gs-no-resize="true"
+    >
     </div>
 </div>
 
@@ -45,10 +46,10 @@
         var options = {
             float: true,
             removable: true,
-            auto: false,
-            minWidth: 40,
-            width: 40,
-            height: 10
+//            auto: false,
+            minWidth: 6,
+//            width: 40,
+//            height: 10
         };
         $('.grid-stack').gridstack(options);
 
@@ -61,7 +62,7 @@
 //                    {x: 1, y: 4, width: 1, height: 1},
 //                    {x: 1, y: 3, width: 1, height: 1},
 //                    {x: 2, y: 4, width: 1, height: 1},
-                {x: 2, y: 5, width: 1, height: 1}
+//                {x: 2, y: 5, width: 1, height: 1}
             ];
 
             this.grid = $('.grid-stack').data('gridstack');

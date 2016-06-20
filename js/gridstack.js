@@ -925,11 +925,14 @@
             return ;
         }
         if (!this.opts.verticalMargin) {
+            // console.log(1);
             this.container.css('height', (height * (this.opts.cellHeight)) + this.opts.cellHeightUnit);
         } else if (this.opts.cellHeightUnit === this.opts.verticalMarginUnit) {
+            // console.log(2);
             this.container.css('height', (height * (this.opts.cellHeight + this.opts.verticalMargin) -
                 this.opts.verticalMargin) + this.opts.cellHeightUnit);
         } else {
+            // console.log(3);
             this.container.css('height', 'calc(' + ((height * (this.opts.cellHeight)) + this.opts.cellHeightUnit) +
                 ' + ' + ((height * (this.opts.verticalMargin - 1)) + this.opts.verticalMarginUnit) + ')');
         }
