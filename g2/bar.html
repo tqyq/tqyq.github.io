@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>柱状图</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.9/doc.css" />
+    <!--如果不需要jquery ajax 则可以不引入-->
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
+    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.3/index.js"></script>
+  </head>
+  <body>
+    <div id="c1"></div>
+    <!-- G2 code start -->
+    <script>
+      $.getJSON('/json/data.json?filename=diamond',function (data) {
+        var Stat = G2.Stat;
+        var chart = new G2.Chart({
+          id: 'c1',
+          width: 1000,
+          height: 500,
+          plotCfg: {
+            margin: [20, 100, 60, 80]
+          }
+        });
+        chart.source(data);
+        chart.interval().position(Stat.summary.mean('cut*price')).color('cut');
+		chart.guide().text(['Ideal', 3326], '完美的钻石', {
+			//fill: colors[0],
+			'text-anchor': 'middle'
+		  });
+		  chart.guide().image(['Good', 3300], {
+			src: '/img/ameng.jpg',
+			width: 120,
+			height: 120
+		  });
+		  chart.axis('cut', {labels: null});
+		  chart.axis('price', {labels: null});
+		  chart.legend(false);
+        chart.render();
+      });
+    </script>
+    <!-- G2 code end -->
+  </body>
+</html>
