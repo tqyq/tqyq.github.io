@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>折线图</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.11/doc.css" />
+    <!--如果不需要jquery ajax 则可以不引入-->
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
+    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.4/index.js"></script>
+    <script>
+        G2.Global.setTheme('dark');
+    </script>
+</head>
+<body>
+<style>
+    .bg {
+        background-color: #000;
+    }
+</style>
+<div id="c1" class="bg"></div>
+<script>
+    var data = [];
+    for (var i = 0; i < 10; i++) {
+        var str;
+        var time = i + 8;
+        if (time > 9) {
+            str = time + ':00';
+        } else {
+            str = '0' + time + ':00';
+        }
+        data.push({"x":str,"y":Math.random()*10 + 5,"c":"新客"});
+        data.push({"x":str,"y":Math.random()*10 + 10,"c":"老客"});
+    }
+    var chart = new G2.Chart({
+        id: 'c1',
+        width: 1000,
+        height: 500
+    });
+    var defs = {
+        'x': {
+            alias: '时间',
+        },
+        'y': {
+            alias: '占比'
+        },
+        'c': {
+            alias: '新老客'
+        }
+    };
+    chart.source(data, defs);
+    chart.line().position('x*y').color('c').shape('smooth').size(2);
+    chart.point().position('x*y').color('c').shape('c', ['circle']).size(4);
+    chart.render();
+</script>
+</body>
+</html>
