@@ -23,11 +23,12 @@
     var svg = d3.select("body").append("svg")
             .attr("width", diameter)
             .attr("height", diameter)
-            .attr("class", "bubble");
+//            .attr("class", "bubble")
+            ;
 
     d3.json("/json/flare.json", function (error, root) {
         if (error) throw error;
-
+        console.log(classes(root));
         var node = svg.selectAll(".node")
                 .data(bubble.nodes(classes(root))
                         .filter(function (d) {
@@ -37,7 +38,8 @@
                 .attr("class", "node")
                 .attr("transform", function (d) {
                     return "translate(" + d.x + "," + d.y + ")";
-                });
+                })
+                ;
 
         node.append("title")
                 .text(function (d) {
@@ -56,7 +58,8 @@
                 .attr("dy", ".3em")
                 .style("text-anchor", "middle")
                 .text(function (d) {
-                    return d.className.substring(0, d.r / 3);
+                    return d.packageName + d.className.substring(0, d.r / 3);
+//                    return d.className;
                 });
     });
 
