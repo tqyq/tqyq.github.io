@@ -1,0 +1,35 @@
+{
+  "name": "flare",
+  "children": [
+    {
+      "name": "analytics",
+      "children": [
+        {
+          "name": "男",
+          "children": [
+            {"name": "<10", "size": 1},
+            {"name": "10~20", "size": 2},
+            {"name": "20~30", "size": 3},
+            {"name": ">30", "size": 4}
+          ]
+        },
+        {
+          "name": "女",
+          "children": [
+            {"name": "A", "size": 1},
+            {"name": "B", "size": 2},
+            {"name": "C", "size": 3},
+            {"name": "D", "size": 4},
+            {"name": "E", "size": 5}
+          ]
+        },
+        {
+          "name": "optimization",
+          "children": [
+            {"name": "AspectRatioBanker", "size": 6}
+          ]
+        }
+      ]
+    }
+  ]
+}
