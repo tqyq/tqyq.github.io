@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>tqyq's world</title>
+    <link rel="stylesheet" href="/css/one.css" type="text/css" media="screen"/>
+
+    <script type="text/javascript" src="/js/d3.min.js"></script>
+    <script src="/js/echarts.min.js" charset="utf-8"></script>
+    <script src="/js/beijing.js" charset="utf-8"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+<div id="main" style="width: 400px; height: 500px">
+</div>
+</body>
+<script>
+//    var chart = echarts.init(document.getElementById('main'));
+//    chart.setOption({
+//        series: [{
+//            type: 'map',
+//            map: '北京',
+//            geo: {
+//                map: '北京',
+//                label: {
+//                    emphasis: {
+//                        show: false
+//                    }
+//                },
+//                roam: true,
+//                itemStyle: {
+//                    normal: {
+//                        areaColor: '#ff0000',
+//                        borderColor: '#111'
+//                    },
+//                    emphasis: {
+//                        areaColor: '#2a333d'
+//                    }
+//                }
+//            }
+//        }]
+//    });
+    d3.json('/json/beijing.json', function (data) {
+        echarts.registerMap('北京', data);
+        var chart = echarts.init(document.getElementById('main'));
+        chart.setOption({
+            backgroundColor: '#404a59',
+            geo: {
+                map: '北京',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                roam: true,
+                itemStyle: {
+                    normal: {
+                        areaColor: '#ff0000',
+                        borderColor: '#111'
+                    },
+                    emphasis: {
+                        areaColor: '#2a333d'
+                    }
+                },
+                regions: [{
+                    name: '西城区',
+                    itemStyle: {
+                        normal: {
+                            color: 'red'
+                        }
+                    }
+                }]
+            },
+            series: [{
+                type: 'map',
+                map: '北京'
+            }]
+        });
+    });
+</script>
+</html>
