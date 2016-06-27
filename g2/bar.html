@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>柱状图</title>
-    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.9/doc.css" />
+    <title>横向柱状图</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.11/doc.css"/>
     <!--如果不需要jquery ajax 则可以不引入-->
     <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
     <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
-    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.3/index.js"></script>
-  </head>
-  <body>
-    <div id="c1"></div>
-    <!-- G2 code start -->
-    <script>
-      $.getJSON('/json/data.json?filename=diamond',function (data) {
-        var Stat = G2.Stat;
-        var chart = new G2.Chart({
-          id: 'c1',
-          width: 1000,
-          height: 500,
-          plotCfg: {
-            margin: [20, 100, 60, 80]
-          }
+    <!-- 引入 G2 脚本 -->
+    <script src="https://as.alipayobjects.com/g/datavis/g2/1.2.4/index.js"></script>
+</head>
+<body>
+<style>
+    .bg {
+        background-color: #2c3e50;
+    }
+</style>
+<div id="c1" class="bg"></div>
+<!-- G2 code start -->
+<script>
+    G2.Global.setTheme('dark');
+    var data = [
+        {"x": "北京市", "y": 123, "color": "#666"},
+        {"x": "天津市", "y": 234, "color": "#111"},
+        {"x": "河北省", "y": 345, "color": "#111"},
+        {"x": "山西省", "y": 87, "color": "#111"},
+        {"x": "内蒙古自治区", "y": 167, "color": "#111"},
+        {"x": "辽宁省", "y": 95, "color": "#111"},
+    ];
+    var Stat = G2.Stat;
+    var Frame = G2.Frame;
+    var frame = new Frame(data);
+    //frame = Frame.sort(frame, 'y'); // 将数据按照y 进行排序，由大到小
+    var chart = new G2.Chart({
+        id: 'c1',
+        width: 1000,
+        height: 500,
+        plotCfg: {
+            margin: [20, 60, 80, 120]
+        }
+    });
+    chart.source(frame);
+    chart.axis('y', {
+        title: null,
+        line: null,
+        labels: null
+    });
+    chart.axis('x', {
+        title: null,
+        labels: {
+            label: {
+                'font-size': 20
+            }
+        }
+    });
+    //chart.coord('rect').transpose();
+    var pos = chart.interval().position('x*y');
+    pos.opacity(1);
+    //        chart.position('x*y').label('x',{label: {fill: '#F8AB60'}});
+    pos.color('color', function (v) {
+        return v;
+    });
+    chart.legend(false);
+
+    G2.Util.each(data, function (item, index) {
+        var offset = 0.15;
+        chart.guide().text([index - offset, item.y], '' + item.y, {
+            fill: '#fff',
+            'font-size': '20'
         });
-        chart.source(data);
-        chart.interval().position(Stat.summary.mean('cut*price')).color('cut');
-		chart.guide().text(['Ideal', 3326], '完美的钻石', {
-			//fill: colors[0],
-			'text-anchor': 'middle'
-		  });
-		  chart.guide().image(['Good', 3300], {
-			src: '/img/ameng.jpg',
-			width: 120,
-			height: 120
-		  });
-		  chart.axis('cut', {labels: null});
-		  chart.axis('price', {labels: null});
-		  chart.legend(false);
-        chart.render();
-      });
-    </script>
-    <!-- G2 code end -->
-  </body>
+    });
+    chart.render();
+</script>
+<!-- G2 code end -->
+</body>
 </html>

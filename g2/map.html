@@ -2,45 +2,81 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.9/doc.css" />
+    <title>地图与气泡图</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.11/doc.css" />
     <!--如果不需要jquery ajax 则可以不引入-->
-      <script type="text/javascript" src="/js/d3.min.js"></script>
-    <!--<script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>-->
-    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.3/index.js"></script>
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
+    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.4/index.js"></script>
   </head>
-  <body>
+  <body style="background-color: #000">
     <div id="c1"></div>
     <!-- G2 code start -->
-    <script>
-        d3.json('/json/beijing.json', function(mapData) {
-            var Stat = G2.Stat;
-            var userData = [];
-            var features = mapData.features;
-            for(var i=0; i<features.length; i++) {
-                var name = features[i].properties.name;
-                userData.push({
-                    "name": name,
-                    "value": Math.round(Math.random()*1000)
-                });
-            }
-            var chart = new G2.Chart({
-                id: 'c1',
-                width: 1000,
-                height: 500,
-                plotCfg: {
-                    margin: [30, 200]
-                }
-            });
-            chart.source(userData);
-            chart.axis(false);
-            chart.polygon().position(Stat.map.region('name', mapData)).color('value');
-            chart.point().position(Stat.map.center('name', mapData))
-                    .color('#fff')
-                    .label('name', {offset: 0, label: {fill: '#000', 'font-size': 10}})
-                    .size(0);
-            chart.render();
+    <script src="https://as.alipayobjects.com/g/datavis/g-plugin-map/1.1.0/index.js"></script>
+	<script>
+      G2.Global.setTheme('dark');
+      $.getJSON('http://pub.mrocker.com/data.json', function(mapData) {
+        var Stat = G2.Stat;
+        var userData = [
+          {name: '北京',value: Math.round(Math.random()*1000)},
+          {name: '天津',value: Math.round(Math.random()*1000)},
+          {name: '上海',value: Math.round(Math.random()*1000)},
+          {name: '重庆',value: Math.round(Math.random()*1000)},
+          {name: '河北',value: Math.round(Math.random()*1000)},
+          {name: '河南',value: Math.round(Math.random()*1000)},
+          {name: '云南',value: Math.round(Math.random()*1000)},
+          {name: '辽宁',value: Math.round(Math.random()*1000)},
+          {name: '黑龙江',value: Math.round(Math.random()*1000)},
+          {name: '湖南',value: Math.round(Math.random()*1000)},
+          {name: '安徽',value: Math.round(Math.random()*1000)},
+          {name: '山东',value: Math.round(Math.random()*1000)},
+          {name: '新疆',value: Math.round(Math.random()*1000)},
+          {name: '江苏',value: Math.round(Math.random()*1000)},
+          {name: '浙江',value: Math.round(Math.random()*1000)},
+          {name: '江西',value: Math.round(Math.random()*1000)},
+          {name: '湖北',value: Math.round(Math.random()*1000)},
+          {name: '广西',value: Math.round(Math.random()*1000)},
+          {name: '甘肃',value: Math.round(Math.random()*1000)},
+          {name: '山西',value: Math.round(Math.random()*1000)},
+          {name: '内蒙古',value: Math.round(Math.random()*1000)},
+          {name: '陕西',value: Math.round(Math.random()*1000)},
+          {name: '吉林',value: Math.round(Math.random()*1000)},
+          {name: '福建',value: Math.round(Math.random()*1000)},
+          {name: '贵州',value: Math.round(Math.random()*1000)},
+          {name: '广东',value: Math.round(Math.random()*1000)},
+          {name: '青海',value: Math.round(Math.random()*1000)},
+          {name: '西藏',value: Math.round(Math.random()*1000)},
+          {name: '四川',value: Math.round(Math.random()*1000)},
+          {name: '宁夏',value: Math.round(Math.random()*1000)},
+          {name: '海南',value: Math.round(Math.random()*1000)},
+          {name: '台湾',value: Math.round(Math.random()*1000)},
+          {name: '香港',value: Math.round(Math.random()*1000)},
+          {name: '澳门',value: Math.round(Math.random()*1000)}
+        ];
+        var chart = new G2.Chart({
+          id: 'c1',
+          width: 1000,
+          height: 500,
+          plotCfg: {
+            margin: [50, 200]
+          }
         });
+        chart.source(userData);
+        var gmap = new G2.Plugin.GMap({
+          chart: chart,
+          mapData: mapData,
+          style: {
+            stroke: '#999',
+            fill: '#111'
+          }
+        }).draw();
+        chart.tooltip({
+          crosshairs: false
+        });
+        chart.legend('value', false);
+        chart.point().position(Stat.map.center('name', mapData)).size('value', 25).opacity(0.5).shape('circle').label('name');
+        chart.render();
+      });
     </script>
     <!-- G2 code end -->
   </body>
