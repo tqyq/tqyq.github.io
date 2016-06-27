@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>横向柱状图</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.11/doc.css" />
+    <!--如果不需要jquery ajax 则可以不引入-->
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
+    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.4/index.js"></script>
+  </head>
+  <body style="background-color: #000">
+    <div id="c1"></div>
+    <!-- G2 code start -->
+    <script>
+	G2.Global.setTheme('dark');
+      var data = [
+        {"province":"北京","population":5000},
+        {"province":"上海","population":4410},
+        {"province":"广州","population":3980},
+        {"province":"深圳","population":3640},
+        {"province":"济南","population":3150},
+        {"province":"青岛","population":3080},
+        {"province":"武汉","population":2840},
+        {"province":"杭州","population":2330},
+        {"province":"苏州","population":1500},
+        {"province":"常州","population":1280},
+        
+      ];
+      var Stat = G2.Stat;
+      var Frame = G2.Frame;
+      var frame = new Frame(data);
+      frame = Frame.sort(frame, 'population'); // 将数据按照population 进行排序，由大到小
+      var chart = new G2.Chart({
+        id : 'c1',
+        width : 1000,
+        height : 500,
+        plotCfg: {
+          margin: [20, 60, 80, 120]
+        }
+      });
+      chart.source(frame);
+      chart.axis('province',{
+	  //position: 'top',
+        title: null,
+		grid: false,
+		//line: false,
+		labels: {
+            label: {
+                'font-size': 20
+            }
+        }
+      });
+	  
+    chart.axis('population', {
+        title: null,
+		grid: false,
+		//line: false,
+        labels: {
+            label: {
+                'font-size': 20
+            }
+        }
+    });
+      chart.coord('rect').transpose();
+      chart.interval().position('province*population').size(30);
+      chart.render();
+    </script>
+    <!-- G2 code end -->
+  </body>
+</html>
