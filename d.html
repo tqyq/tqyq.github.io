@@ -3,39 +3,54 @@
 <head>
     <meta charset="utf-8">
     <title>jQuery UI Draggable - Default functionality</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
     <script src="/js/jquery-1.10.2.js"></script>
     <script src="/js/jquery-ui.js"></script>
-    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         #container {
             width: 800px;
             height: 400px;
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+            border: solid 1px;
+            background-color: #2c3e50;
         }
 
         #draggable {
             width: 150px;
             height: 150px;
-            padding: 0.5em;
             border: solid 1px;
+            background-color: #222222;
+            opacity: 0.8;
+            cursor: pointer;
+            color: #ccc;
         }
     </style>
     <script>
         $(function () {
             $("#draggable").draggable({
-                containment: "#container"
+                containment: "#container",
+                snap: true,
+                grid: [50, 50]
             });
             $("#draggable").resizable({
-                containment: "#container"
+                containment: "#container",
+                snap: true,
+                grid: 50
             });
         });
     </script>
 </head>
 <body>
 
-<div id="container" class="ui-widget-content">
+<div id="container">
     <div id="draggable" class="ui-widget-content">
-        <p>Drag me around</p>
+        <p>Drag me</p>
     </div>
 </div>
 
