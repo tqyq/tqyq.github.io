@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>jQuery UI Draggable - Default functionality</title>
+    <title>grid editor demo</title>
     <link rel="stylesheet" href="/css/jquery-ui.css">
     <script src="/js/jquery-1.10.2.js"></script>
     <script src="/js/jquery-ui.js"></script>
@@ -32,16 +32,28 @@
         }
     </style>
     <script>
+        function round(n) {
+            return Math.round(n / 50) * 50;
+        }
         $(function () {
             $("#draggable").draggable({
                 containment: "#container",
-                snap: true,
-                grid: [50, 50]
+                stop: function () {
+                    var pos = $(this).position();
+                    $(this).css({
+                        'left': round(pos.left) + 'px',
+                        'top': round(pos.top) + 'px'
+                    });
+                }
             });
             $("#draggable").resizable({
                 containment: "#container",
-                snap: true,
-                grid: 50
+                stop: function () {
+                    var w = $(this).width();
+                    var h = $(this).height();
+                    $(this).width(round(w));
+                    $(this).height(round(h));
+                }
             });
         });
     </script>
