@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>雷达图(区域)</title>
+    <link rel="stylesheet" type="text/css" href="https://as.alipayobjects.com/g/datavis/g2-static/0.0.11/doc.css" />
+    <!--如果不需要jquery ajax 则可以不引入-->
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="https://a.alipayobjects.com/alipay-request/3.0.3/index.js"></script>
+    <!-- 引入 G2 脚本 --><script src="https://as.alipayobjects.com/g/datavis/g2/1.2.4/index.js"></script>
+    <script>
+        G2.Global.setTheme('dark');
+    </script>
+</head>
+<body style="background-color: #000">
+<div id="c1"></div>
+<script>
+    var data = [
+        {item: "易用性", value: 80, obj: "华为Mate"},
+        {item: "功能", value: 90, obj: "华为Mate"},
+        {item: "拍照", value: 80, obj: "华为Mate"},
+        {item: "跑分", value: 70, obj: "华为Mate"},
+        {item: "续航", value: 90, obj: "华为Mate"},
+        {item: "易用性", value: 70, obj: "中兴Grand Memo"},
+        {item: "功能", value: 82, obj: "中兴Grand Memo"},
+        {item: "拍照", value: 81, obj: "中兴Grand Memo"},
+        {item: "跑分", value: 82, obj: "中兴Grand Memo"},
+        {item: "续航", value: 78, obj: "中兴Grand Memo"}
+    ];
+    var chart = new G2.Chart({
+        id: 'c1',
+        width: 1000,
+        height: 500,
+        plotCfg: {
+            margin: [20, 140, 60, 80]
+        }
+    });
+    chart.source(data, {
+        'value': {
+            min: 0,
+            max: 100,
+            tickCount: 5
+        }
+    });
+    chart.coord('polar');
+//    chart.legend('obj', { // 配置具体字段对应的图例属性
+//        title: null
+//    });
+    chart.legend(false);
+    chart.axis('item',{ // 设置坐标系栅格样式
+        line: null,
+        labels: {
+            label: {
+                'font-size': 20
+            }
+        }
+    });
+    chart.axis('value',{ // 设置坐标系栅格样式
+        grid: {
+            type: 'polygon' //圆形栅格，可以改成
+        }
+    });
+    chart.line().position('item*value').color('obj');
+    chart.point().position('item*value').color('obj');
+    chart.area().position('item*value').color('obj', function (v) {
+        if (v == '华为Mate') {
+            return 'red';
+        } else {
+            return 'blue';
+        }
+    });
+    chart.render();
+</script>
+</body>
+</html>
