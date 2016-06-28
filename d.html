@@ -4,67 +4,34 @@
     <meta charset="utf-8">
     <title>grid editor demo</title>
     <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/dhe.css">
     <script src="/js/jquery-1.10.2.js"></script>
     <script src="/js/jquery-ui.js"></script>
+    <script src="/js/dhe.js"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
         }
 
-        #container {
-            width: 800px;
-            height: 400px;
-            background-size: 50px 50px;
-            background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
-            border: solid 1px;
-            background-color: #2c3e50;
-        }
-
-        #draggable {
-            width: 150px;
-            height: 150px;
-            border: solid 1px;
-            background-color: #222222;
-            opacity: 0.8;
-            cursor: pointer;
-            color: #ccc;
-        }
     </style>
     <script>
-        function round(n) {
-            return Math.round(n / 50) * 50;
-        }
         $(function () {
-            $("#draggable").draggable({
-                containment: "#container",
-                stop: function () {
-                    var pos = $(this).position();
-                    $(this).css({
-                        'left': round(pos.left) + 'px',
-                        'top': round(pos.top) + 'px'
-                    });
-                }
-            });
-            $("#draggable").resizable({
-                containment: "#container",
-                stop: function () {
-                    var w = $(this).width();
-                    var h = $(this).height();
-                    $(this).width(round(w));
-                    $(this).height(round(h));
-                }
-            });
+            var dhe = new DhEditor("#container", {grid: 50, w: 800, h: 400});
+            dhe.addWidget(".c");
+            dhe.addWidget(".c", {id:123, x: 5, y: 2, w: 3, h: 1});
         });
+
     </script>
 </head>
 <body>
 
 <div id="container">
-    <div id="draggable" class="ui-widget-content">
-        <p>Drag me</p>
-    </div>
 </div>
 
+<div style="display: none" class="c">
+    <p>Drag me</p>
+    <a href="javascript:;" style="position: absolute; right: 5px; top: 5px; color: white">配置</a>
+</div>
 </body>
 </html>
