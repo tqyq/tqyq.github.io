@@ -6,8 +6,16 @@ function DhEditor(container) {
 
     this.addWidget = function addWidget(sel, opt) {
         var dhe = this;
-        var widget = $(sel).clone();
+        var widget = null;
+        $(sel).each(function (i, v) {
+            if (!v.cloned) {
+                widget = $(v).clone();
+            }
+        });
+        widget.cloned = true;
         widget.show();
+        widget.addClass("widget");
+        widget.addClass("ui-widget-content");
         widget.appendTo(this.container);
         widget.draggable({
             containment: this.container,

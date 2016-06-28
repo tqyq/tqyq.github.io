@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>grid editor demo</title>
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <link rel="stylesheet" href="/css/dhe.css">
+    <script src="/js/jquery-1.10.2.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/dhe.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+    <script>
+        var dhe = new DhEditor("#container");
+        $(function () {
+            dhe.addWidget(".c");
+//            dhe.addWidget(".c");
+//            dhe.addWidget(".widget", {id:123, x: 5, y: 5, w: 2, h: 2});
+        });
+    </script>
+</head>
+<body>
+
+<div id="container">
+
+</div>
+
+<div style="display: none" class="c">
+    <p>Drag me</p>
+    <a href="javascript:;" style="position: absolute; right: 5px; top: 5px; color: white">配置</a>
+</div>
+</body>
+</html>
