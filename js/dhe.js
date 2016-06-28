@@ -18,7 +18,8 @@ function DhEditor(container, cfg) {
             }
         });
         widget.cloned = true;
-        widget.attr("id", opt.id || null);
+        // widget.attr("id", opt.id || null);
+        widget.uniqueId();
         widget.show();
         widget.addClass("widget");
         widget.addClass("ui-widget-content");
@@ -52,9 +53,11 @@ function DhEditor(container, cfg) {
             var id = $(this).parent().attr("id");
             dhe.removeWidget(id);
         });
+        return widget;
     }
 
     this.removeWidget = function (sel) {
+        console.log(sel)
         $('#' + sel).remove();
         // $(this.container).remove('#' + sel);
     }
@@ -66,12 +69,21 @@ function DhEditor(container, cfg) {
 
     this.load = function (json) {
         this.removeAll();
-        for(var i = 0; i < json.length; i++) {
+        for (var i = 0; i < json.length; i++) {
             this.addWidget(".c", json[i]);
         }
     }
 
     this.toJson = function () {
-
+        var json = [];
+        var grid = this.cfg.grid;
+        $(this.container).find('.widget').each(function (i, v) {
+            v = $(v);
+            var pos = v.position();
+            var w = v.width() / grid;
+            var h = v.height() / grid;
+            json.push({x: pos.left / grid, y: pos.top / grid, w: w, h: h});
+        });
+        return json;
     }
 }

@@ -13,9 +13,7 @@
             margin: 0;
             padding: 0;
         }
-
     </style>
-
 </head>
 <body>
 <a href="#" id="add_btn">addWidget</a>
@@ -34,10 +32,9 @@
 </body>
 <script>
     var dhe = new DhEditor("#container", {grid: 50, w: 800, h: 400});
-    dhe.addWidget(".c", {id: 'test'});
+    dhe.addWidget(".c");
     $("#add_btn").on("click", function () {
         dhe.addWidget(".c", {
-            id: Math.random(),
             x: Math.round(10 * Math.random()),
             y: Math.round(4 * Math.random()),
             w: 2,
@@ -45,23 +42,23 @@
         });
     });
 
-    var json = [
-        {
-            id: Math.random(),
+    var json = [];
+    for (var i = 0; i < 5; i++) {
+        json.push({
             x: Math.round(10 * Math.random()),
             y: Math.round(4 * Math.random()),
             w: 2,
             h: 2
-        }, {
-            id: Math.random(),
-            x: Math.round(10 * Math.random()),
-            y: Math.round(4 * Math.random()),
-            w: 3,
-            h: 1
-        }
-    ];
+        });
+    }
     $("#load_btn").on("click", function () {
         dhe.load(json);
+    });
+    $("#removeall_btn").on("click", function () {
+        dhe.removeAll();
+    });
+    $("#tojson_btn").on("click", function () {
+        alert(JSON.stringify(dhe.toJson()));
     });
 
 </script>
