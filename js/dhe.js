@@ -8,7 +8,7 @@ function DhEditor(container, cfg) {
         return Math.round(n / grid) * grid;
     }
 
-    this.addWidget = function addWidget(sel, opt) {
+    this.addWidget = function (sel, opt) {
         var dhe = this;
         var widget = null;
         opt = opt || {};
@@ -18,7 +18,7 @@ function DhEditor(container, cfg) {
             }
         });
         widget.cloned = true;
-
+        widget.attr("id", opt.id || null);
         widget.show();
         widget.addClass("widget");
         widget.addClass("ui-widget-content");
@@ -27,7 +27,7 @@ function DhEditor(container, cfg) {
             'left': opt.x * this.cfg.grid || 0,
             'top': opt.y * this.cfg.grid || 0,
             'width': (opt.w || 2) * this.cfg.grid,
-            'height': (opt.y || 2) * this.cfg.grid,
+            'height': (opt.h || 2) * this.cfg.grid,
         });
         widget.draggable({
             containment: this.container,
@@ -48,17 +48,30 @@ function DhEditor(container, cfg) {
                 $(this).height(dhe.round(h));
             }
         });
+        widget.find(".clz_btn").on("click", function () {
+            var id = $(this).parent().attr("id");
+            dhe.removeWidget(id);
+        });
     }
 
-    this.removeWidget = function removeWidget() {
-
+    this.removeWidget = function (sel) {
+        $('#' + sel).remove();
+        // $(this.container).remove('#' + sel);
     }
 
-    this.load = function load() {
-
+    this.removeAll = function () {
+        $('.widget').remove();
+        // $(this.container).remove('#' + sel);
     }
 
-    this.toJson = function toJson() {
+    this.load = function (json) {
+        this.removeAll();
+        for(var i = 0; i < json.length; i++) {
+            this.addWidget(".c", json[i]);
+        }
+    }
+
+    this.toJson = function () {
 
     }
 }
