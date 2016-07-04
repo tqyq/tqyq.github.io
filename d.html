@@ -31,12 +31,12 @@
 </div>
 </body>
 <script>
-    var dhe = new DhEditor("#container", {grid: 50, w: 800, h: 400});
+    var dhe = new DhEditor("#container", {grid: 50, w: 16, h: 8});
     dhe.addWidget(".c");
     $("#add_btn").on("click", function () {
         dhe.addWidget(".c", {
-            x: Math.round(10 * Math.random()),
-            y: Math.round(4 * Math.random()),
+            x: dhe.rand(0, 14),
+            y: dhe.rand(0, 6),
             w: 2,
             h: 2
         });
@@ -45,8 +45,8 @@
     var json = [];
     for (var i = 0; i < 5; i++) {
         json.push({
-            x: Math.round(10 * Math.random()),
-            y: Math.round(4 * Math.random()),
+            x: dhe.rand(0, 14),
+            y: dhe.rand(0, 6),
             w: 2,
             h: 2
         });

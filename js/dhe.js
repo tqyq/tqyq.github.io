@@ -1,11 +1,18 @@
 function DhEditor(container, cfg) {
     this.container = container;
     this.cfg = cfg || {};
-    $(container).width(cfg.w || 800);
-    $(container).height(cfg.h || 400);
+    var grid = this.cfg.grid || 50;
+    $(container).width(cfg.w * grid || 16 * grid);
+    $(container).height(cfg.h * grid || 8 * grid);
     this.round = function round(n) {
-        var grid = this.cfg.grid || 50;
         return Math.round(n / grid) * grid;
+    }
+    this.rand = function (min, max) {
+        var r = Math.round(Math.random() * max);
+        if (r < min) {
+            r = Math.round(min + Math.random() * (max - min));
+        }
+        return r;
     }
 
     this.addWidget = function (sel, opt) {
@@ -27,8 +34,8 @@ function DhEditor(container, cfg) {
         widget.css({
             'left': opt.x * this.cfg.grid || 0,
             'top': opt.y * this.cfg.grid || 0,
-            'width': (opt.w || 2) * this.cfg.grid,
-            'height': (opt.h || 2) * this.cfg.grid,
+            'width': (opt.w || 2) * this.cfg.grid - 2,
+            'height': (opt.h || 2) * this.cfg.grid - 2,
         });
         widget.draggable({
             containment: this.container,
@@ -45,8 +52,8 @@ function DhEditor(container, cfg) {
             stop: function () {
                 var w = $(this).width();
                 var h = $(this).height();
-                $(this).width(dhe.round(w));
-                $(this).height(dhe.round(h));
+                $(this).width(dhe.round(w) - 2);
+                $(this).height(dhe.round(h) - 2);
             }
         });
         widget.find(".clz_btn").on("click", function () {
