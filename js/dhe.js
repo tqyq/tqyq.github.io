@@ -7,6 +7,7 @@ function DhEditor(container, cfg) {
     this.cfg = cfg;
     $(container).width(cfg.w * this.cfg.grid);
     $(container).height(cfg.h * this.cfg.grid);
+    $(container).addClass("dashboard-dark");
     this.round = function round(n) {
         return Math.round(n / this.cfg.grid) * this.cfg.grid;
     }
@@ -16,6 +17,10 @@ function DhEditor(container, cfg) {
             r = Math.round(min + Math.random() * (max - min));
         }
         return r;
+    }
+    this.toggleBg = function () {
+        $(this.container).toggleClass("dashboard-active");
+        $(this.container).toggleClass("dashboard-dark");
     }
 
     this.addWidget = function (sel, opt) {
@@ -48,7 +53,11 @@ function DhEditor(container, cfg) {
         });
         widget.draggable({
             containment: this.container,
+            start: function () {
+                dhe.toggleBg();
+            },
             stop: function () {
+                dhe.toggleBg();
                 var pos = $(this).position();
                 $(this).css({
                     'left': dhe.round(pos.left) + 'px',
@@ -58,7 +67,11 @@ function DhEditor(container, cfg) {
         });
         widget.resizable({
             containment: this.container,
+            start: function () {
+                dhe.toggleBg();
+            },
             stop: function () {
+                dhe.toggleBg();
                 var w = $(this).width();
                 var h = $(this).height();
                 $(this).width(dhe.round(w) - 2);

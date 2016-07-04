@@ -2,8 +2,15 @@
     background-size: 50px 50px;
     border: solid 1px;
     position: relative;
+}
+
+.dashboard-active {
     background: url(../img/grid.png) #060606;
     background-size: 50px;
+}
+
+.dashboard-dark {
+    background: #060606;
 }
 
 .widget {
