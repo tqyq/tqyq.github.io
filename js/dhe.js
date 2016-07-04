@@ -1,11 +1,12 @@
 function DhEditor(container, cfg) {
+    this.widget_border = 2;
     this.container = container;
     this.cfg = cfg || {};
-    var grid = this.cfg.grid || 50;
-    $(container).width(cfg.w * grid || 16 * grid);
-    $(container).height(cfg.h * grid || 8 * grid);
+    this.cfg.grid = this.cfg.grid || 50;
+    $(container).width(cfg.w * this.cfg.grid || 16 * this.cfg.grid);
+    $(container).height(cfg.h * this.cfg.grid || 8 * this.cfg.grid);
     this.round = function round(n) {
-        return Math.round(n / grid) * grid;
+        return Math.round(n / this.cfg.grid) * this.cfg.grid;
     }
     this.rand = function (min, max) {
         var r = Math.round(Math.random() * max);
@@ -19,6 +20,8 @@ function DhEditor(container, cfg) {
         var dhe = this;
         var widget = null;
         opt = opt || {};
+        opt.w = opt.w || 2;
+        opt.h = opt.h || 2;
         $(sel).each(function (i, v) {
             if (!v.cloned) {
                 widget = $(v).clone();
@@ -31,11 +34,13 @@ function DhEditor(container, cfg) {
         widget.addClass("widget");
         widget.addClass("ui-widget-content");
         widget.appendTo(this.container);
+        widget.attr('w', opt.w);
+        widget.attr('h', opt.h);
         widget.css({
             'left': opt.x * this.cfg.grid || 0,
             'top': opt.y * this.cfg.grid || 0,
-            'width': (opt.w || 2) * this.cfg.grid - 2,
-            'height': (opt.h || 2) * this.cfg.grid - 2,
+            'width': opt.w * this.cfg.grid - this.widget_border,
+            'height': opt.h * this.cfg.grid - this.widget_border,
         });
         widget.draggable({
             containment: this.container,
@@ -54,6 +59,8 @@ function DhEditor(container, cfg) {
                 var h = $(this).height();
                 $(this).width(dhe.round(w) - 2);
                 $(this).height(dhe.round(h) - 2);
+                widget.attr('w', dhe.round(w) / dhe.cfg.grid);
+                widget.attr('h', dhe.round(h) / dhe.cfg.grid);
             }
         });
         widget.find(".clz_btn").on("click", function () {
@@ -84,11 +91,12 @@ function DhEditor(container, cfg) {
     this.toJson = function () {
         var json = [];
         var grid = this.cfg.grid;
+        // var dhe = this;
         $(this.container).find('.widget').each(function (i, v) {
             v = $(v);
             var pos = v.position();
-            var w = v.width() / grid;
-            var h = v.height() / grid;
+            var w = v.attr('w');
+            var h = v.attr('h');
             json.push({x: pos.left / grid, y: pos.top / grid, w: w, h: h});
         });
         return json;
