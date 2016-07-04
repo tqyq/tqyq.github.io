@@ -4,6 +4,7 @@ function DhEditor(container, cfg) {
     cfg.w = cfg.w || 16;
     cfg.h = cfg.h || 8;
     cfg.grid = cfg.grid || 50;
+    // this.matrix = [][];
     this.cfg = cfg;
     $(container).width(cfg.w * this.cfg.grid);
     $(container).height(cfg.h * this.cfg.grid);
@@ -17,6 +18,13 @@ function DhEditor(container, cfg) {
             r = Math.round(min + Math.random() * (max - min));
         }
         return r;
+    }
+    this.fillMatrix = function (x, y, w, h) {
+        for (var i = x; i < w; i++) {
+            for (var j = y; j < h; j++) {
+                this.matrix[i][j] = 1;
+            }
+        }
     }
     this.toggleBg = function () {
         $(this.container).toggleClass("dashboard-active");
