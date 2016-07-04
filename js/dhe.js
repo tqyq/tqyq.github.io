@@ -1,10 +1,12 @@
 function DhEditor(container, cfg) {
     this.widget_border = 2;
     this.container = container;
-    this.cfg = cfg || {};
-    this.cfg.grid = this.cfg.grid || 50;
-    $(container).width(cfg.w * this.cfg.grid || 16 * this.cfg.grid);
-    $(container).height(cfg.h * this.cfg.grid || 8 * this.cfg.grid);
+    cfg.w = cfg.w || 16;
+    cfg.h = cfg.h || 8;
+    cfg.grid = cfg.grid || 50;
+    this.cfg = cfg;
+    $(container).width(cfg.w * this.cfg.grid);
+    $(container).height(cfg.h * this.cfg.grid);
     this.round = function round(n) {
         return Math.round(n / this.cfg.grid) * this.cfg.grid;
     }
@@ -22,6 +24,8 @@ function DhEditor(container, cfg) {
         opt = opt || {};
         opt.w = opt.w || 2;
         opt.h = opt.h || 2;
+        opt.x = opt.x || 0;
+        opt.y = opt.y || 0;
         $(sel).each(function (i, v) {
             if (!v.cloned) {
                 widget = $(v).clone();
@@ -37,8 +41,8 @@ function DhEditor(container, cfg) {
         widget.attr('w', opt.w);
         widget.attr('h', opt.h);
         widget.css({
-            'left': opt.x * this.cfg.grid || 0,
-            'top': opt.y * this.cfg.grid || 0,
+            'left': opt.x * this.cfg.grid,
+            'top': opt.y * this.cfg.grid,
             'width': opt.w * this.cfg.grid - this.widget_border,
             'height': opt.h * this.cfg.grid - this.widget_border,
         });
