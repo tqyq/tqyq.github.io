@@ -4,7 +4,13 @@ function DhEditor(container, cfg) {
     cfg.w = cfg.w || 16;
     cfg.h = cfg.h || 8;
     cfg.grid = cfg.grid || 50;
-    // this.matrix = [][];
+    this.matrix = [];
+    for (var i = 0; i < cfg.w; i++) {
+        this.matrix[i] = [];
+        for (var j = 0; j < cfg.h; j++) {
+            this.matrix[i][j] = 0;
+        }
+    }
     this.cfg = cfg;
     $(container).width(cfg.w * this.cfg.grid);
     $(container).height(cfg.h * this.cfg.grid);
@@ -20,11 +26,25 @@ function DhEditor(container, cfg) {
         return r;
     }
     this.fillMatrix = function (x, y, w, h) {
+        var overlap = false;
         for (var i = x; i < w; i++) {
             for (var j = y; j < h; j++) {
-                this.matrix[i][j] = 1;
+                if (this.matrix[i][j] == 1) {
+                    overlap = true;
+                    break;
+                }
+                // this.matrix[i][j] = 1;
             }
         }
+        if (!overlap) {
+            for (var i = x; i < w; i++) {
+                for (var j = y; j < h; j++) {
+                    this.matrix[i][j] = 1;
+                }
+            }
+        }
+        console.log(overlap);
+        return overlap;
     }
     this.toggleBg = function () {
         $(this.container).toggleClass("dashboard-active");
@@ -39,6 +59,7 @@ function DhEditor(container, cfg) {
         opt.h = opt.h || 2;
         opt.x = opt.x || 0;
         opt.y = opt.y || 0;
+        dhe.fillMatrix(opt.x, opt.y, opt.w, opt.h);
         $(sel).each(function (i, v) {
             if (!v.cloned) {
                 widget = $(v).clone();
