@@ -14,6 +14,8 @@
     <style>
         .bg {
             background: #000;
+            /*background: url(/img/ameng.jpg) #060606;*/
+            /*background-size: 50px;*/
         }
     </style>
 </head>
@@ -31,7 +33,13 @@
     var chart = new G2.Chart({
         id: 'c1',
         width : 1000,
-        height : 500
+        height : 500,
+        plotCfg: {
+            margin: [0,0,0,0],
+            background : {
+                fill:"transparent"
+            }
+        }
     });
     chart.source(data, {
         weight: {
