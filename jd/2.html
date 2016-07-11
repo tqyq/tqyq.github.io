@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://www.datavis.cn/jd1111/phone_2.html -->
+<html class=" canvas webgl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>phone_2</title>
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link type="text/css" rel="stylesheet" href="./res/subCommon.css">
+    <script src="./res/modernizr.min.js"></script>
+    <script src="./res/jquery-1.10.2.min.js"></script>
+    <script src="./res/three.min.js"></script>
+    <script src="./res/TweenLite.min.js"></script>
+    <script src="./res/EasePack.min.js"></script>
+    <script src="./res/subCommon.js"></script>
+    <script src="./res/threeGroupLoader.js"></script>
+    <script src="./res/dataTool.js"></script>
+    <script src="./res/phone_2.js"></script>
+    <script>
+        var phone_2;
+		$(document).ready(function(){
+            new jd.SubCommon();
+            if(Modernizr.webgl)
+            {
+                //支持webgl
+                init();
+            }
+            else
+            {
+                //不支持webgl
+            }
+		});
+
+        function init()
+        {
+            phone_2 = new jd.Phone_2();
+            animate();
+        }
+
+        function animate()
+        {
+            requestAnimationFrame(animate);
+            phone_2.render();
+        }
+    </script>
+</head>
+<body class="bg">
+    <div id="container3d"><canvas width="1366" height="632" style="width: 1366px; height: 632px;"></canvas></div>
+    <div class="loading" style="display: none;">
+        <div class="loadingCir">
+            <img src="./res/loadingCir.png">
+        </div>
+    </div>
+    <div class="shader">
+        <!-- Custom shaders for particle effects -->
+        <script type="x-shader/x-vertex" id="vertexshader">
+			//uniform float amplitude;
+			attribute float size;
+			attribute vec3 customColor;
+			varying vec3 vColor;
+			attribute float customOpacity;
+			varying float vOpacity;
+			void main() {
+				vColor = customColor;
+				vOpacity = customOpacity;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_PointSize = size;
+				//gl_PointSize = size * ( 300.0 / length( mvPosition.xyz ) );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+        <script type="x-shader/x-fragment" id="fragmentshader">
+			uniform vec3 color;
+			uniform float opacity;
+			uniform sampler2D texture;
+			varying vec3 vColor;
+			varying float vOpacity;
+			void main() {
+				gl_FragColor = vec4( color * vColor, opacity*vOpacity );
+				//gl_FragColor = vec4( color * vColor, 1.0 );
+				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+			}
+		</script>
+        <!-- end of custom shaders -->
+    </div>
+
+ <img class="jdLogo" src="./res/jdLogo.png"> <img class="slogan" src="./res/slogan.png"></body></html>

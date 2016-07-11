@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>grid editor demo</title>
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <script data-main="js/main" src="/js/require.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+</div>
+
+</body>
+<script>
+    require(["line-g2"], function () {
+        console.log("load render");
+    });
+    //    var r1 = new Render("#container", {chart: "line", url: "http://api.datahunter.cn/demo/line", w: 4, h: 3, x: 2, y: 2});
+</script>
+</html>
