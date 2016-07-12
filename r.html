@@ -12,6 +12,11 @@
             padding: 0;
             background-color: #222222;
         }
+        #container {
+            /*width: 1000px;*/
+            /*height: 600px;*/
+            /*position: relative;*/
+        }
     </style>
 </head>
 <body>
@@ -21,7 +26,8 @@
 </body>
 <script>
     require(["render"], function (r) {
-        r.render("#container", {_id: "123", chart: "line-g2", url: "http://api.datahunter.cn/demo/line", width: 8, height: 4, x: 6, y: 2});
+        r.render("#container", {_id: "123", chart: "line-g2", url: "http://api.datahunter.cn/demo/line", width: 8, height: 4, x: 0, y: 0});
+        r.render("#container", {_id: "456", chart: "line-g2", url: "http://api.datahunter.cn/demo/line", width: 8, height: 4, x: 0, y: 4});
     });
 </script>
 </html>

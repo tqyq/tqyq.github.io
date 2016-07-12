@@ -13,7 +13,7 @@ define(function(){
                         data[a].c = a % 2 == 0 ? "新客" : "老客";
                         data[a].color = a % 2 == 0 ? "blue" : "white";
                     }
-                    var chartDiv = $("div");
+                    var chartDiv = $("<div>");
                     chartDiv.attr("id", opt._id);
                     chartDiv.css({
                         position: "absolute",
@@ -22,11 +22,11 @@ define(function(){
                         left: opt.x * opt.grid,
                         top: opt.y * opt.grid,
                     });
-                    chartDiv.appendTo(container);
+                    container.append(chartDiv);
                     chart.setDim(opt.width * opt.grid, opt.height * opt.grid);
                     console.log(opt.width * opt.grid, opt.height * opt.grid);
                     chart.setContainer(opt._id);
-                    chart.setData(data);
+                    chart.render(data);
                 });
             });
         }

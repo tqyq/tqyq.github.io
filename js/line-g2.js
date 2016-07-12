@@ -1,6 +1,5 @@
 define(function () {
     G2.Global.setTheme('dark');
-    var data;
     var container;
     var width, height;
     return {
@@ -11,11 +10,7 @@ define(function () {
             width = w;
             height = h;
         },
-        setData: function (d) {
-            data = d;
-            this.render();
-        },
-        render: function () {
+        render: function (data) {
             var chart = new G2.Chart({
                 id: container,
                 width: width,
