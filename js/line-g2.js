@@ -1,4 +1,5 @@
 define(function () {
+    G2.Global.setTheme('dark');
     var data = [];
     for (var i = 0; i < 12; i++) {
         var str;
@@ -12,7 +13,7 @@ define(function () {
         data.push({"x": str, "y": Math.random() * 10 + 10, "c": "老客", "color": "white"});
     }
     var chart = new G2.Chart({
-        id: 'c1',
+        id: 'container',
         width: 1000,
         height: 500
     });
@@ -30,7 +31,7 @@ define(function () {
     chart.source(data, defs);
     chart.line().position('x*y').color('color', function (v) {
         return v;
-    }).shape('smooth').size(20);
+    }).shape('smooth').size(2);
     chart.point().position('x*y').color('color', function (v) {
         return v;
     }).shape('c', ['circle']).size(4);
