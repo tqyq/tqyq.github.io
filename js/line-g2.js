@@ -14,7 +14,10 @@ define(function () {
             var chart = new G2.Chart({
                 id: container,
                 width: width,
-                height: height
+                height: height,
+                plotCfg: {
+                    // margin: [10,20,20,30]
+                }
             });
             var defs = {
                 'x': {
