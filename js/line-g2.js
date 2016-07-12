@@ -1,41 +1,47 @@
 define(function () {
     G2.Global.setTheme('dark');
-    var data = [];
-    for (var i = 0; i < 12; i++) {
-        var str;
-        var time = i + 8;
-        if (time > 9) {
-            str = time + ':00';
-        } else {
-            str = '0' + time + ':00';
-        }
-        data.push({"x": str, "y": Math.random() * 10 + 5, "c": "新客", "color": "blue"});
-        data.push({"x": str, "y": Math.random() * 10 + 10, "c": "老客", "color": "white"});
-    }
-    var chart = new G2.Chart({
-        id: 'container',
-        width: 1000,
-        height: 500
-    });
-    var defs = {
-        'x': {
-            alias: '时间',
+    var data;
+    var container;
+    var width, height;
+    return {
+        setContainer: function (c) {
+            container = c;
         },
-        'y': {
-            alias: '占比'
+        setDim: function (w, h) {
+            width = w;
+            height = h;
         },
-        'c': {
-            alias: '新老客'
+        setData: function (d) {
+            data = d;
+            this.render();
+        },
+        render: function () {
+            var chart = new G2.Chart({
+                id: container,
+                width: width,
+                height: height
+            });
+            var defs = {
+                'x': {
+                    alias: '时间',
+                },
+                'y': {
+                    alias: '占比'
+                },
+                'c': {
+                    alias: '新老客'
+                }
+            };
+            chart.source(data, defs);
+            chart.line().position('x*y').color('color', function (v) {
+                return v;
+            }).shape('smooth').size(2);
+            chart.point().position('x*y').color('color', function (v) {
+                return v;
+            }).shape('c', ['circle']).size(4);
+            chart.axis('x', {title: null});
+            chart.axis('y', {title: null});
+            chart.render();
         }
     };
-    chart.source(data, defs);
-    chart.line().position('x*y').color('color', function (v) {
-        return v;
-    }).shape('smooth').size(2);
-    chart.point().position('x*y').color('color', function (v) {
-        return v;
-    }).shape('c', ['circle']).size(4);
-    chart.axis('x', {title: null});
-    chart.axis('y', {title: null});
-    chart.render();
 })
